@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Citas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/dashboard}" class="navbar-brand">Centro de Ayuda Emocional</a>
+        <ul class="navbar-menu">
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/citas}">Citas</a></li>
+            <li><a th:href="@{/servicios}">Servicios</a></li>
+            <li><a th:href="@{/profesionales}">Profesionales</a></li>
+            <li><a th:href="@{/usuarios}">Usuarios</a></li>
+            <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Bienvenido al Sistema de Gestión de Citas</h1>
+            <p style="color: var(--color-text-light); font-size: 1.125rem;">
+                Panel de administración para el centro de ayuda emocional y psicológica
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="card">
+                <h3>Citas</h3>
+                <p style="color: var(--color-text-light);">Gestiona todas las citas del sistema</p>
+                <a th:href="@{/citas}" class="btn btn-primary mt-3">Ver Citas</a>
+            </div>
+
+            <div class="card">
+                <h3>Servicios</h3>
+                <p style="color: var(--color-text-light);">Administra los servicios ofrecidos</p>
+                <a th:href="@{/servicios}" class="btn btn-primary mt-3">Ver Servicios</a>
+            </div>
+
+            <div class="card">
+                <h3>Profesionales</h3>
+                <p style="color: var(--color-text-light);">Gestiona el equipo de profesionales</p>
+                <a th:href="@{/profesionales}" class="btn btn-primary mt-3">Ver Profesionales</a>
+            </div>
+
+            <div class="card">
+                <h3>Usuarios</h3>
+                <p style="color: var(--color-text-light);">Administra los usuarios del sistema</p>
+                <a th:href="@{/usuarios}" class="btn btn-primary mt-3">Ver Usuarios</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${cita.id != null ? 'Editar Cita' : 'Nueva Cita'}">Formulario de Cita</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/dashboard}" class="navbar-brand">Centro de Ayuda Emocional</a>
+        <ul class="navbar-menu">
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/citas}">Citas</a></li>
+            <li><a th:href="@{/servicios}">Servicios</a></li>
+            <li><a th:href="@{/profesionales}">Profesionales</a></li>
+            <li><a th:href="@{/usuarios}">Usuarios</a></li>
+            <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 th:text="${cita.id != null ? 'Editar Cita' : 'Nueva Cita'}"></h2>
+            </div>
+
+            <form th:action="${cita.id != null ? '/citas/editar/' + cita.id : '/citas/nueva'}" 
+                  method="post" th:object="${cita}">
+                
+                <div class="form-group">
+                    <label for="fechaHora" class="form-label">Fecha y Hora</label>
+                    <input type="datetime-local" id="fechaHora" th:field="*{fechaHora}" 
+                           class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuarioId" class="form-label">Usuario</label>
+                    <select id="usuarioId" th:field="*{usuarioId}" class="form-control" required>
+                        <option value="">Selecciona un usuario</option>
+                        <option th:each="usuario : ${usuarios}" 
+                                th:value="${usuario.id}" 
+                                th:text="${usuario.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="servicioId" class="form-label">Servicio</label>
+                    <select id="servicioId" th:field="*{servicioId}" class="form-control" required>
+                        <option value="">Selecciona un servicio</option>
+                        <option th:each="servicio : ${servicios}" 
+                                th:value="${servicio.id}" 
+                                th:text="${servicio.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="profesionalId" class="form-label">Profesional</label>
+                    <select id="profesionalId" th:field="*{profesionalId}" class="form-control" required>
+                        <option value="">Selecciona un profesional</option>
+                        <option th:each="profesional : ${profesionales}" 
+                                th:value="${profesional.id}" 
+                                th:text="${profesional.usuarioNombre + ' - ' + profesional.especialidad}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select id="estado" th:field="*{estado}" class="form-control" required>
+                        <option value="PENDIENTE">Pendiente</option>
+                        <option value="CONFIRMADA">Confirmada</option>
+                        <option value="COMPLETADA">Completada</option>
+                        <option value="CANCELADA">Cancelada</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/citas}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

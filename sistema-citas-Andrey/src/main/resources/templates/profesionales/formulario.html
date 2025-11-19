@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${profesional.id != null ? 'Editar Profesional' : 'Nuevo Profesional'}">Formulario de Profesional</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/dashboard}" class="navbar-brand">Centro de Ayuda Emocional</a>
+        <ul class="navbar-menu">
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/citas}">Citas</a></li>
+            <li><a th:href="@{/servicios}">Servicios</a></li>
+            <li><a th:href="@{/profesionales}">Profesionales</a></li>
+            <li><a th:href="@{/usuarios}">Usuarios</a></li>
+            <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 th:text="${profesional.id != null ? 'Editar Profesional' : 'Nuevo Profesional'}"></h2>
+            </div>
+
+            <form th:action="${profesional.id != null ? '/profesionales/editar/' + profesional.id : '/profesionales/nuevo'}" 
+                  method="post" th:object="${profesional}">
+                
+                <div class="form-group">
+                    <label for="usuarioId" class="form-label">Usuario Asociado</label>
+                    <select id="usuarioId" th:field="*{usuarioId}" class="form-control" required>
+                        <option value="">Selecciona un usuario</option>
+                        <option th:each="usuario : ${usuarios}" 
+                                th:value="${usuario.id}" 
+                                th:text="${usuario.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="especialidad" class="form-label">Especialidad</label>
+                    <input type="text" id="especialidad" th:field="*{especialidad}" 
+                           class="form-control" placeholder="Ej: Psicología Clínica" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="horarioDisponible" class="form-label">Horario Disponible</label>
+                    <input type="datetime-local" id="horarioDisponible" th:field="*{horarioDisponible}" 
+                           class="form-control">
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/profesionales}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesionales - Sistema de Citas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/dashboard}" class="navbar-brand">Centro de Ayuda Emocional</a>
+        <ul class="navbar-menu">
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/citas}">Citas</a></li>
+            <li><a th:href="@{/servicios}">Servicios</a></li>
+            <li><a th:href="@{/profesionales}">Profesionales</a></li>
+            <li><a th:href="@{/usuarios}">Usuarios</a></li>
+            <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header flex justify-between align-center">
+                <h2>Gestión de Profesionales</h2>
+                <a th:href="@{/profesionales/nuevo}" class="btn btn-primary">Nuevo Profesional</a>
+            </div>
+
+            <div th:if="${mensaje}" class="alert alert-success">
+                <p th:text="${mensaje}"></p>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Especialidad</th>
+                        <th>Horario Disponible</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="profesional : ${profesionales}">
+                        <td th:text="${profesional.id}"></td>
+                        <td th:text="${profesional.usuarioNombre}"></td>
+                        <td th:text="${profesional.especialidad}"></td>
+                        <td th:text="${profesional.horarioDisponible != null ? #temporals.format(profesional.horarioDisponible, 'dd/MM/yyyy HH:mm') : 'No especificado'}"></td>
+                        <td>
+                            <div class="flex gap-2">
+                                <a th:href="@{/profesionales/editar/{id}(id=${profesional.id})}" class="btn btn-secondary">Editar</a>
+                                <form th:action="@{/profesionales/eliminar/{id}(id=${profesional.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger" 
+                                            onclick="return confirm('¿Estás seguro de eliminar este profesional?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(profesionales)}" class="text-center" style="padding: 2rem;">
+                <p style="color: var(--color-text-light);">No hay profesionales registrados en el sistema.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

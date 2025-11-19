@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${servicio.id != null ? 'Editar Servicio' : 'Nuevo Servicio'}">Formulario de Servicio</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/dashboard}" class="navbar-brand">Centro de Ayuda Emocional</a>
+        <ul class="navbar-menu">
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/citas}">Citas</a></li>
+            <li><a th:href="@{/servicios}">Servicios</a></li>
+            <li><a th:href="@{/profesionales}">Profesionales</a></li>
+            <li><a th:href="@{/usuarios}">Usuarios</a></li>
+            <li><a th:href="@{/logout}">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 th:text="${servicio.id != null ? 'Editar Servicio' : 'Nuevo Servicio'}"></h2>
+            </div>
+
+            <form th:action="${servicio.id != null ? '/servicios/editar/' + servicio.id : '/servicios/nuevo'}" 
+                  method="post" th:object="${servicio}">
+                
+                <div class="form-group">
+                    <label for="nombre" class="form-label">Nombre del Servicio</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" 
+                           class="form-control" placeholder="Ej: Terapia Individual" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea id="descripcion" th:field="*{descripcion}" 
+                              class="form-control" rows="4" 
+                              placeholder="Describe el servicio ofrecido"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="duracion" class="form-label">Duración</label>
+                    <input type="text" id="duracion" th:field="*{duracion}" 
+                           class="form-control" placeholder="Ej: 60 minutos">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" id="precio" th:field="*{precio}" 
+                           class="form-control" step="0.01" min="0" 
+                           placeholder="0.00" required>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/servicios}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
